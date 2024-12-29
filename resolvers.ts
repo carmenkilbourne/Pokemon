@@ -22,15 +22,15 @@ export const resolvers = {
         } else {
           throw new GraphQLError("No se ha encontrado el ID o nombre del Pokémon.");
         }
-        const response = await fetch(parametro);
-        if (!response.ok) {
+        const ApiResponse = await fetch(parametro);
+        if (!ApiResponse) {
           throw new GraphQLError("Pokémon no encontrado");
         }
 
-        const PokemonInfo = await response.json();
+        const PokemonData = await ApiResponse.json();
 
-        const abilities: Ability[] = await Promise.all(
-          PokemonInfo.abilities.map(async (ability) => {
+        const PokemonAbilities: Ability[] = await Promise.all(
+          PokemonData.abilities.map(async (ability) => {
             const abiliti = await fetch(ability.ability.url);
             const abilityInfo = await abiliti.json();
 
@@ -43,16 +43,16 @@ export const resolvers = {
           })
         );
 
-        const moves: Move[] = PokemonInfo.moves.map((move) => ({
+        const PokemonMoves: Move[] = PokemonData.moves.map((move) => ({
           name: move.move.name,
           power: move.move.power, 
         }));
 
         return {
-          id: PokemonInfo.id.toString(),
-          name: PokemonInfo.name,
-          abilities,
-          moves,
+          id: PokemonData.id.toString(),
+          name: PokemonData.name,
+          abilities: PokemonAbilities,
+          moves: PokemonMoves
         };
       } catch {
         throw new GraphQLError("No existe el pokemon");
