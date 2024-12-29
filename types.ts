@@ -2,16 +2,16 @@
 export type Pokemon = {
     id: string,
     name: string,
-    abilities: abilitie[],
-    moves:move[]
+    abilities: Ability[],
+    moves:Move[]
 }
 
-type abilitie = {
+export type Ability = {
     name:string,
-    efect:string
+    effect:string
 }
 
-type move = {
+export type Move = {
     name:string,
     power:string
 }

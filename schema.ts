@@ -1,26 +1,23 @@
 export const schema = `#graphql
 
-type pokemon{
-    id:ID!
-    name:String!
-    abilities:[abilitie]!
-    moves:[move]!
-
+type Pokemon {
+    id: ID!
+    name: String!
+    abilities: [Ability]!
+    moves: [Move]!
 }
 
-type abilitie{
-    name:String!
-    efect:String!
+type Ability {
+    name: String!
+    effect: String!
 }
 
-type move{
-    name:String!
-    power:String!
+type Move {
+    name: String!
+    power: String
 }
 
-type Query{
-    pokemon(name:String!):pokemon!
-    pokemon(id:ID!):pokemon!
+type Query {
+    pokemon(id: ID, name: String): Pokemon!
 }
-
-`
+`;
